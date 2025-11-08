@@ -1,0 +1,56 @@
+plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+
+    // 🔹 Firebase plugin
+    id("com.google.gms.google-services")
+
+    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    id("dev.flutter.flutter-gradle-plugin")
+}
+
+android {
+    namespace = "com.example.login_firebase"
+    compileSdk = flutter.compileSdkVersion
+    ndkVersion = flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11.toString()
+    }
+
+    defaultConfig {
+        applicationId = "com.example.login_firebase"
+        minSdk = flutter.minSdkVersion
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
+
+        // 🔹 Correct KTS syntax for enabling MultiDex
+        multiDexEnabled = true
+    }
+
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.getByName("debug")
+        }
+    }
+}
+
+flutter {
+    source = "../.."
+}
+
+// 🔹 Dependencies block
+dependencies {
+    implementation("com.google.firebase:firebase-auth:23.1.0")
+    implementation("com.google.firebase:firebase-analytics:22.1.2")
+    implementation("androidx.multidex:multidex:2.0.1")
+}
+
+// 🔹 Apply Google services plugin at the end
+apply(plugin = "com.google.gms.google-services")
